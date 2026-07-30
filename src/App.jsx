@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { AuthProvider, useAuth } from './hooks/useAuth'
+import { ThemeProvider } from './hooks/useTheme'
 import LoginPage from './auth/LoginPage'
 import Navbar from './components/Navbar'
 import ExpenseEntry from './pages/ExpenseEntry'
@@ -13,10 +14,10 @@ function ProtectedRoute({ children }) {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
   return (
-    <div className="pb-16">
+    <>
       {children}
       <Navbar />
-    </div>
+    </>
   )
 }
 
@@ -40,9 +41,11 @@ function AppRoutes() {
 export default function App() {
   return (
     <HashRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </ThemeProvider>
     </HashRouter>
   )
 }

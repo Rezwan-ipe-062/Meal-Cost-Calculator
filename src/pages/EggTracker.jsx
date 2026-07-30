@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '../supabaseClient'
 import { useAuth } from '../hooks/useAuth'
-import { getMemberName } from '../utils/debtNetting'
 import { MEMBERS } from '../utils/constants'
 
 export default function EggTracker() {
@@ -51,28 +50,28 @@ export default function EggTracker() {
   }
 
   return (
-    <div className="p-4 pb-28 min-h-screen" style={{ background: 'var(--mc-black)' }}>
-      <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-2xl mb-6 text-center" style={{ color: 'var(--mc-gold)' }}>
-        🥚 Egg Tracker
+    <div className="p-4 pt-14 pb-28 min-h-screen" style={{ background: 'var(--mc-bg)' }}>
+      <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl mb-6 text-center" style={{ color: 'var(--mc-gold)' }}>
+        Egg Tracker
       </motion.h1>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-6 mb-4 text-center" style={{ background: remaining <= 2 ? '#3a1a1a' : 'var(--mc-brown)' }}>
-        <p className="text-sm">Stock Remaining</p>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-6 mb-4 text-center" style={{ background: remaining <= 2 ? '#3a1a1a' : 'var(--mc-card)' }}>
+        <p className="text-sm" style={{ color: 'var(--mc-text-secondary)' }}>Stock Remaining</p>
         <p className="text-5xl font-bold my-2" style={{ color: remaining <= 2 ? 'var(--mc-red)' : 'var(--mc-green)' }}>{remaining}</p>
         {remaining <= 2 && remaining > 0 && <p className="text-red-400 text-sm">⚠️ Low stock — buy more!</p>}
         {remaining <= 0 && <p className="text-red-400 text-sm">❌ No eggs left!</p>}
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <h3 className="text-sm font-bold mb-3">Add Eggs (purchased)</h3>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
+        <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--mc-text)' }}>Add Eggs (purchased)</h3>
         <div className="flex gap-2">
           <input type="number" inputMode="numeric" value={addQty} onChange={e => setAddQty(e.target.value)} className="pixel-input flex-1 p-4 text-lg" placeholder="Qty" />
           <button onClick={handleAddStock} className="pixel-btn px-6 font-bold text-base" style={{ background: 'var(--mc-grass)', color: 'white' }}>Add</button>
         </div>
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <h3 className="text-sm font-bold mb-3">Who ate eggs?</h3>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
+        <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--mc-text)' }}>Who ate eggs?</h3>
         <div className="flex flex-col gap-2 mb-3">
           <select value={eatMember} onChange={e => setEatMember(e.target.value)} className="pixel-input w-full p-4 text-base">
             <option value="">Who?</option>
@@ -92,11 +91,11 @@ export default function EggTracker() {
         <button onClick={handleEat} className="pixel-btn w-full py-4 font-bold text-base" style={{ background: 'var(--mc-gold)', color: 'var(--mc-black)' }}>Log Eggs Eaten</button>
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3 }} className="pixel-border p-4" style={{ background: 'var(--mc-brown)' }}>
-        <h3 className="text-sm font-bold mb-3">Per-person consumption</h3>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3 }} className="pixel-border p-4" style={{ background: 'var(--mc-card)' }}>
+        <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--mc-text)' }}>Per-person consumption</h3>
         {MEMBERS.map(m => (
           <div key={m.id} className="flex justify-between items-center py-2">
-            <span className="text-base">{m.name}</span>
+            <span style={{ color: 'var(--mc-text)' }}>{m.name}</span>
             <span className="text-lg font-bold" style={{ color: 'var(--mc-gold)' }}>{perPerson[m.id] || 0} eggs</span>
           </div>
         ))}

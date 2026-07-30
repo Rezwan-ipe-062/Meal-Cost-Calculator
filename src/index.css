@@ -5,17 +5,41 @@
   src: url('https://fonts.cdnfonts.com/s/37642/MinecraftRegular-Bmg3.otf') format('opentype');
 }
 
-:root {
+:root,
+[data-theme="dark"] {
   --mc-grass: #5b8731;
   --mc-dirt: #8b5e3c;
   --mc-stone: #7a7a7a;
-  --mc-sky: #87ceeb;
   --mc-gold: #ffaa00;
   --mc-red: #ff5555;
   --mc-green: #55ff55;
   --mc-brown: #6b3a1f;
   --mc-black: #1a1a1a;
   --mc-white: #f0f0f0;
+  --mc-bg: #1a1a1a;
+  --mc-card: #6b3a1f;
+  --mc-text: #f0f0f0;
+  --mc-text-secondary: #b0b0b0;
+  --mc-input-bg: #2a2a2a;
+  --txn-bg: #2a2a2a;
+}
+
+[data-theme="light"] {
+  --mc-grass: #4a7a28;
+  --mc-dirt: #c4a882;
+  --mc-stone: #b0a8a0;
+  --mc-gold: #c8860a;
+  --mc-red: #c03030;
+  --mc-green: #2d7a2d;
+  --mc-brown: #f0e8e0;
+  --mc-black: #f5f0eb;
+  --mc-white: #1a1a1a;
+  --mc-bg: #f5f0eb;
+  --mc-card: #ffffff;
+  --mc-text: #1a1a1a;
+  --mc-text-secondary: #6b6b6b;
+  --mc-input-bg: #ffffff;
+  --txn-bg: #ffffff;
 }
 
 * {
@@ -25,15 +49,14 @@
 
 body {
   font-family: 'Minecraft', monospace;
-  background-color: var(--mc-black);
-  color: var(--mc-white);
+  background-color: var(--mc-bg);
+  color: var(--mc-text);
   margin: 0;
   padding: 0;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Safe area padding for modern phones */
 .pb-safe {
   padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
 }
@@ -70,12 +93,40 @@ body {
 
 .pixel-input {
   border: 3px solid var(--mc-stone);
-  background: #2a2a2a;
-  color: var(--mc-white);
+  background: var(--mc-input-bg);
+  color: var(--mc-text);
   box-shadow: inset 2px 2px 0 0 #4a4a4a;
   outline: none;
 }
 
 .pixel-input:focus {
   border-color: var(--mc-gold);
+}
+
+/* Theme toggle switch */
+.theme-switch {
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  cursor: pointer;
+  position: relative;
+  border: 3px solid var(--mc-stone);
+  background: var(--mc-brown);
+  transition: background 0.2s;
+}
+
+.theme-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--mc-gold);
+  transition: transform 0.2s;
+}
+
+.theme-switch.on::after {
+  transform: translateX(24px);
 }

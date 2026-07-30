@@ -55,50 +55,50 @@ export default function ExpenseEntry() {
   }
 
   return (
-    <div className="p-4 pb-28 min-h-screen" style={{ background: 'var(--mc-black)' }}>
-      <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-2xl mb-6 text-center" style={{ color: 'var(--mc-gold)' }}>
+    <div className="p-4 pt-14 pb-28 min-h-screen" style={{ background: 'var(--mc-bg)' }}>
+      <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl mb-6 text-center" style={{ color: 'var(--mc-gold)' }}>
         New Expense
       </motion.h1>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <label className="block text-sm mb-2">Amount (৳)</label>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
+        <label className="block text-sm mb-2" style={{ color: 'var(--mc-text)' }}>Amount (৳)</label>
         <input type="number" inputMode="decimal" value={amount} onChange={e => setAmount(e.target.value)} className="pixel-input w-full p-4 mb-3 text-lg" placeholder="0" autoFocus />
 
-        <label className="block text-sm mb-2">Item (optional)</label>
+        <label className="block text-sm mb-2" style={{ color: 'var(--mc-text)' }}>Item (optional)</label>
         <input type="text" value={itemName} onChange={e => setItemName(e.target.value)} className="pixel-input w-full p-4 mb-3" placeholder="e.g. Rice, Oil" />
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <label className="block text-sm mb-3">Paid By</label>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
+        <label className="block text-sm mb-3" style={{ color: 'var(--mc-text)' }}>Paid By</label>
         <div className="grid grid-cols-3 gap-2 mb-4">
           {MEMBERS.map(m => (
-            <button key={m.id} onClick={() => setPaidBy(m.id)} className="pixel-btn py-4 text-sm font-bold min-h-[52px]" style={{ background: paidBy === m.id ? 'var(--mc-grass)' : 'var(--mc-stone)', color: 'white' }}>
+            <button key={m.id} onClick={() => setPaidBy(m.id)} className="pixel-btn py-4 text-sm font-bold min-h-[52px]" style={{ background: paidBy === m.id ? 'var(--mc-grass)' : 'var(--mc-stone)', color: paidBy === m.id ? 'white' : 'var(--mc-text)' }}>
               {m.name}
             </button>
           ))}
         </div>
 
-        <label className="block text-sm mb-3">Split Between</label>
+        <label className="block text-sm mb-3" style={{ color: 'var(--mc-text)' }}>Split Between</label>
         <div className="grid grid-cols-3 gap-2 mb-3">
           {MEMBERS.map(m => (
-            <button key={m.id} onClick={() => toggleSplit(m.id)} className="pixel-btn py-4 text-sm font-bold min-h-[52px]" style={{ background: splitBetween[m.id] ? 'var(--mc-grass)' : 'var(--mc-stone)', color: 'white' }}>
+            <button key={m.id} onClick={() => toggleSplit(m.id)} className="pixel-btn py-4 text-sm font-bold min-h-[52px]" style={{ background: splitBetween[m.id] ? 'var(--mc-grass)' : 'var(--mc-stone)', color: splitBetween[m.id] ? 'white' : 'var(--mc-text)' }}>
               {splitBetween[m.id] ? '✓ ' : ''}{m.name}
             </button>
           ))}
         </div>
 
         {selectedCount > 0 && Number(amount) > 0 && (
-          <div className="text-center text-lg py-2" style={{ background: 'rgba(0,0,0,0.3)' }}>
+          <div className="text-center text-lg py-2" style={{ background: 'rgba(0,0,0,0.1)', color: 'var(--mc-text)' }}>
             Each share: ৳{sharePerPerson}
           </div>
         )}
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <label className="block text-sm mb-2">Date</label>
+      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
+        <label className="block text-sm mb-2" style={{ color: 'var(--mc-text)' }}>Date</label>
         <input type="date" value={date} onChange={e => setDate(e.target.value)} className="pixel-input w-full p-4 mb-3" />
 
-        <label className="block text-sm mb-2">Notes (optional)</label>
+        <label className="block text-sm mb-2" style={{ color: 'var(--mc-text)' }}>Notes (optional)</label>
         <input type="text" value={notes} onChange={e => setNotes(e.target.value)} className="pixel-input w-full p-4" placeholder="Any notes..." />
       </motion.div>
 
