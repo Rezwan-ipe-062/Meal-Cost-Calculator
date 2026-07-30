@@ -5,6 +5,12 @@ import { useAuth } from '../hooks/useAuth'
 import { useTheme } from '../hooks/useTheme'
 import { SHARED_PASSWORD } from '../utils/constants'
 
+function GearIcon() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> }
+function LogoutIcon() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> }
+function SunIcon() { return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> }
+function MoonIcon() { return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> }
+function AlertIcon() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> }
+
 export default function Settings() {
   const { user, logout } = useAuth()
   const { dark, toggle } = useTheme()
@@ -29,45 +35,64 @@ export default function Settings() {
 
   return (
     <div className="page-container">
-      <motion.h1 initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl font-bold mb-5" style={{ color: 'var(--text)' }}>
-        Settings
-      </motion.h1>
+      <div className="flex items-center gap-2 mb-5">
+        <GearIcon />
+        <span className="text-[13px] font-bold uppercase" style={{ color: 'var(--text-muted)', letterSpacing: '0.5px' }}>Settings</span>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card mb-4">
-        <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
-          Logged in as: <strong style={{ color: 'var(--text)' }}>{user?.name}</strong>
-        </p>
-        <button onClick={logout} className="btn-secondary">Logout</button>
-      </motion.div>
-
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="card mb-4">
-        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Appearance</h3>
-        <div className="flex items-center justify-between">
-          <span className="text-sm" style={{ color: 'var(--text)' }}>Dark Mode</span>
-          <div className="flex items-center gap-2">
-            <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{dark ? '🌙' : '☀️'}</span>
-            <div className={`theme-switch ${!dark ? 'on' : ''}`} onClick={toggle} role="button" aria-label="Toggle theme" />
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card mb-3">
+        <div className="flex items-center gap-3">
+          <div style={{ width: 44, height: 44, borderRadius: 14, background: 'var(--green-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
+            <span className="text-base font-extrabold">{user?.name?.[0]}</span>
           </div>
+          <div className="flex-1">
+            <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>{user?.name}</p>
+            <p className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Signed in</p>
+          </div>
+          <button onClick={logout} style={{
+            padding: '10px 16px', fontSize: 13, fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif",
+            border: '1.5px solid var(--border)', borderRadius: 10, background: 'var(--card)', color: 'var(--text-secondary)',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
+          }}>
+            <LogoutIcon />
+            Logout
+          </button>
         </div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="card" style={{ borderColor: 'var(--danger)' }}>
-        <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--danger)' }}>Danger Zone</h3>
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }} className="card mb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div style={{ width: 44, height: 44, borderRadius: 14, background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
+              {dark ? <SunIcon /> : <MoonIcon />}
+            </div>
+            <div>
+              <p className="text-sm font-bold" style={{ color: 'var(--text)' }}>Dark Mode</p>
+              <p className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>{dark ? 'On' : 'Off'}</p>
+            </div>
+          </div>
+          <div className={`theme-toggle ${!dark ? 'on' : ''}`} onClick={toggle} role="button" aria-label="Toggle theme" />
+        </div>
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card" style={{ border: '1.5px solid #FECACA' }}>
+        <div className="flex items-center gap-2 mb-3">
+          <AlertIcon />
+          <p className="text-xs font-bold uppercase" style={{ color: '#DC2626', letterSpacing: '0.3px' }}>Danger Zone</p>
+        </div>
         {!showClear ? (
           <button onClick={() => setShowClear(true)} className="btn-danger">Clear All Data</button>
         ) : (
           <div>
-            <p className="text-sm mb-3" style={{ color: 'var(--danger)' }}>
-              Type the mess password to confirm clearing ALL data.
-            </p>
-            <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="input-field mb-3 text-lg" placeholder="Enter password" autoFocus />
-            <div className="grid grid-cols-2 gap-2">
+            <p className="text-xs font-semibold mb-3" style={{ color: '#DC2626' }}>Type the mess password to confirm</p>
+            <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="input-field mb-3 text-center font-bold" style={{ letterSpacing: '4px' }} placeholder="Password" autoFocus />
+            <div className="grid grid-cols-2 gap-2.5">
               <button onClick={() => { setShowClear(false); setConfirmPw('') }} className="btn-secondary">Cancel</button>
-              <button onClick={handleClearAll} disabled={confirmPw !== SHARED_PASSWORD} className="btn-danger" style={{ opacity: confirmPw !== SHARED_PASSWORD ? 0.5 : 1 }}>Delete All</button>
+              <button onClick={handleClearAll} disabled={confirmPw !== SHARED_PASSWORD} className="btn-danger" style={{ opacity: confirmPw !== SHARED_PASSWORD ? 0.4 : 1 }}>Delete All</button>
             </div>
           </div>
         )}
-        {cleared && <p className="text-sm mt-3 text-center font-bold" style={{ color: 'var(--success)' }}>✓ All data cleared!</p>}
+        {cleared && <p className="text-xs font-bold mt-3 text-center" style={{ color: 'var(--success)' }}>All data cleared!</p>}
       </motion.div>
     </div>
   )

@@ -4,6 +4,11 @@ import { supabase } from '../supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import { MEMBERS } from '../utils/constants'
 
+function EggIcon() { return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c-4 0-8-4.5-8-10S8 2 12 2s8 4.5 8 10-4 10-8 10z"/></svg> }
+function PlusIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> }
+function CheckIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> }
+function UsersIcon() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> }
+
 export default function EggTracker() {
   const { user } = useAuth()
   const [stock, setStock] = useState([])
@@ -54,55 +59,73 @@ export default function EggTracker() {
 
   return (
     <div className="page-container">
-      <motion.h1 initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl font-bold mb-5" style={{ color: 'var(--text)' }}>
-        Egg Tracker
-      </motion.h1>
+      <div className="flex items-center gap-2 mb-5">
+        <EggIcon />
+        <span className="text-[13px] font-bold uppercase" style={{ color: 'var(--text-muted)', letterSpacing: '0.5px' }}>Egg Tracker</span>
+      </div>
 
-      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="card mb-4 text-center" style={{ padding: '24px 16px', borderColor: lowStock || noStock ? 'var(--danger)' : 'var(--border)' }}>
-        <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Stock Remaining</p>
-        <p className="text-5xl font-bold my-2" style={{ color: noStock ? 'var(--danger)' : lowStock ? 'var(--warning)' : 'var(--success)' }}>{remaining}</p>
-        {lowStock && <p className="text-sm font-medium" style={{ color: 'var(--warning)' }}>⚠️ Low stock — buy more!</p>}
-        {noStock && <p className="text-sm font-medium" style={{ color: 'var(--danger)' }}>❌ No eggs left!</p>}
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="card mb-5 text-center" style={{
+        padding: '28px 20px',
+        background: noStock ? '#FEF2F2' : lowStock ? '#FFFBEB' : '#059669',
+        border: 'none',
+      }}>
+        <p className="text-sm font-bold uppercase tracking-wider" style={{ color: noStock || lowStock ? 'var(--text-muted)' : 'rgba(255,255,255,0.7)' }}>
+          Stock Remaining
+        </p>
+        <p className="text-6xl font-extrabold my-2" style={{ color: noStock ? '#DC2626' : lowStock ? '#D97706' : 'white', letterSpacing: '-2px' }}>
+          {remaining}
+        </p>
+        <p className="text-sm font-semibold" style={{ color: noStock ? '#DC2626' : lowStock ? '#D97706' : 'rgba(255,255,255,0.7)' }}>
+          {noStock ? 'No eggs left!' : lowStock ? 'Low stock - buy more!' : 'eggs available'}
+        </p>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="card mb-4">
-        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Add Eggs (purchased)</h3>
-        <div className="flex gap-2">
-          <input type="number" inputMode="numeric" value={addQty} onChange={e => setAddQty(e.target.value)} className="input-field flex-1 text-lg" placeholder="Qty" />
-          <button onClick={handleAddStock} className="btn-primary" style={{ width: 'auto', padding: '14px 24px' }}>Add</button>
+      <div className="card mb-4">
+        <div style={{ display: 'flex', gap: 10 }}>
+          <input type="number" inputMode="numeric" value={addQty} onChange={e => setAddQty(e.target.value)} className="input-field flex-1 text-center text-xl font-bold" placeholder="Qty" />
+          <button onClick={handleAddStock} style={{
+            width: 52, height: 52, borderRadius: 12, border: 'none', background: 'var(--primary)',
+            color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}>
+            <PlusIcon />
+          </button>
         </div>
-      </motion.div>
+        <p className="text-[11px] font-semibold mt-2 text-center" style={{ color: 'var(--text-muted)' }}>Add purchased eggs</p>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="card mb-4">
-        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Who ate eggs?</h3>
-        <div className="flex flex-col gap-2 mb-3">
-          <select value={eatMember} onChange={e => setEatMember(e.target.value)} className="input-field">
-            <option value="">Who?</option>
-            {MEMBERS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
-          </select>
-          <div className="grid grid-cols-2 gap-2">
-            <select value={eatQty} onChange={e => setEatQty(e.target.value)} className="input-field">
-              {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n} egg{n > 1 ? 's' : ''}</option>)}
+      <div className="card mb-4">
+        <p className="text-xs font-bold uppercase mb-3" style={{ color: 'var(--text-muted)', letterSpacing: '0.3px' }}>Log eggs eaten</p>
+        <div className="flex flex-col gap-2.5 mb-3">
+          <div className="grid grid-cols-2 gap-2.5">
+            <select value={eatMember} onChange={e => setEatMember(e.target.value)} className="input-field text-sm font-semibold">
+              <option value="">Who?</option>
+              {MEMBERS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
-            <select value={eatMeal} onChange={e => setEatMeal(e.target.value)} className="input-field">
-              <option value="breakfast">Breakfast</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
+            <select value={eatQty} onChange={e => setEatQty(e.target.value)} className="input-field text-sm font-semibold">
+              {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>{n} egg{n > 1 ? 's' : ''}</option>)}
             </select>
           </div>
+          <select value={eatMeal} onChange={e => setEatMeal(e.target.value)} className="input-field text-sm font-semibold">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+          </select>
         </div>
-        <button onClick={handleEat} className="btn-primary" style={{ background: 'var(--text)', color: 'var(--card)' }}>Log Eggs Eaten</button>
-      </motion.div>
+        <button onClick={handleEat} className="btn-primary" style={{ background: 'var(--text)', color: 'var(--card)' }}>Log Eggs</button>
+      </div>
 
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="card">
-        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Per-person consumption</h3>
+      <div className="card">
+        <div className="flex items-center gap-2 mb-3">
+          <UsersIcon />
+          <p className="text-xs font-bold uppercase" style={{ color: 'var(--text-muted)', letterSpacing: '0.3px' }}>Per person</p>
+        </div>
         {MEMBERS.map((m, i) => (
-          <div key={m.id} className="flex justify-between items-center py-2.5" style={{ borderBottom: i < MEMBERS.length - 1 ? '1px solid var(--border-soft)' : 'none' }}>
-            <span style={{ color: 'var(--text)' }}>{m.name}</span>
-            <span className="text-base font-bold" style={{ color: 'var(--primary)' }}>{perPerson[m.id] || 0} eggs</span>
+          <div key={m.id} className="flex justify-between items-center py-3" style={{ borderBottom: i < MEMBERS.length - 1 ? '1px solid var(--border)' : 'none' }}>
+            <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>{m.name}</span>
+            <span className="text-sm font-extrabold" style={{ color: 'var(--primary)' }}>{perPerson[m.id] || 0} eggs</span>
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }
