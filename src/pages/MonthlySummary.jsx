@@ -22,45 +22,52 @@ export default function MonthlySummary() {
 
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
+  const prevMonth = () => { if (month > 0) setMonth(month - 1); else { setMonth(11); setYear(year - 1) } }
+  const nextMonth = () => { if (month < 11) setMonth(month + 1); else { setMonth(0); setYear(year + 1) } }
+
   return (
-    <div className="p-4 pt-14 pb-28 min-h-screen" style={{ background: 'var(--mc-bg)' }}>
-      <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl mb-4 text-center" style={{ color: 'var(--mc-gold)' }}>
+    <div className="page-container">
+      <motion.h1 initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-xl font-bold mb-4" style={{ color: 'var(--text)' }}>
         Monthly Summary
       </motion.h1>
 
-      <div className="flex justify-center items-center gap-3 mb-6">
-        <button onClick={() => { if (month > 0) setMonth(month - 1); else { setMonth(11); setYear(year - 1) } }} className="pixel-btn px-4 py-3 text-lg" style={{ background: 'var(--mc-stone)', color: 'var(--mc-text)', minWidth: '44px', minHeight: '44px' }}>◀</button>
-        <div className="pixel-border-sm px-5 py-3 text-lg font-bold min-w-[120px] text-center" style={{ background: 'var(--mc-card)', color: 'var(--mc-text)' }}>
+      <div className="flex justify-center items-center gap-3 mb-5">
+        <motion.button whileTap={{ scale: 0.9 }} onClick={prevMonth} className="btn-ghost" style={{ fontSize: 18, padding: '8px 14px', minWidth: 44, minHeight: 44 }}>
+          ◀
+        </motion.button>
+        <div className="px-5 py-3 rounded-xl font-bold text-base min-w-[130px] text-center" style={{ background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text)' }}>
           {months[month]} {year}
         </div>
-        <button onClick={() => { if (month < 11) setMonth(month + 1); else { setMonth(0); setYear(year + 1) } }} className="pixel-btn px-4 py-3 text-lg" style={{ background: 'var(--mc-stone)', color: 'var(--mc-text)', minWidth: '44px', minHeight: '44px' }}>▶</button>
+        <motion.button whileTap={{ scale: 0.9 }} onClick={nextMonth} className="btn-ghost" style={{ fontSize: 18, padding: '8px 14px', minWidth: 44, minHeight: 44 }}>
+          ▶
+        </motion.button>
       </div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
-        <p className="text-sm" style={{ color: 'var(--mc-text-secondary)' }}>Total Expense</p>
-        <p className="text-3xl font-bold" style={{ color: 'var(--mc-gold)' }}>৳{summary.totalExpense.toFixed(2)}</p>
-        <div className="flex gap-4 mt-2 text-sm" style={{ color: 'var(--mc-text-secondary)' }}>
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card mb-4">
+        <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Total Expense</p>
+        <p className="text-3xl font-bold mt-1" style={{ color: 'var(--primary)' }}>৳{summary.totalExpense.toFixed(2)}</p>
+        <div className="flex gap-4 mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
           <p>Transactions: {summary.transactionCount}</p>
           <p>Avg Daily: ৳{avgDaily}</p>
         </div>
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-card)' }}>
-        <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--mc-text)' }}>Amount Paid</h3>
-        {MEMBERS.map(m => (
-          <div key={m.id} className="flex justify-between items-center py-2">
-            <span style={{ color: 'var(--mc-text)' }}>{m.name}</span>
-            <span className="text-base font-bold" style={{ color: 'var(--mc-gold)' }}>৳{(summary.paidBy[m.id] || 0).toFixed(2)}</span>
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="card mb-4">
+        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Amount Paid</h3>
+        {MEMBERS.map((m, i) => (
+          <div key={m.id} className="flex justify-between items-center py-2.5" style={{ borderBottom: i < MEMBERS.length - 1 ? '1px solid var(--border-soft)' : 'none' }}>
+            <span style={{ color: 'var(--text)' }}>{m.name}</span>
+            <span className="text-base font-semibold" style={{ color: 'var(--primary)' }}>৳{(summary.paidBy[m.id] || 0).toFixed(2)}</span>
           </div>
         ))}
       </motion.div>
 
-      <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4" style={{ background: 'var(--mc-card)' }}>
-        <h3 className="text-sm font-bold mb-3" style={{ color: 'var(--mc-text)' }}>Consumption Share</h3>
-        {MEMBERS.map(m => (
-          <div key={m.id} className="flex justify-between items-center py-2">
-            <span style={{ color: 'var(--mc-text)' }}>{m.name}</span>
-            <span className="text-base font-bold" style={{ color: 'var(--mc-gold)' }}>৳{(summary.consumedBy[m.id] || 0).toFixed(2)}</span>
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="card">
+        <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>Consumption Share</h3>
+        {MEMBERS.map((m, i) => (
+          <div key={m.id} className="flex justify-between items-center py-2.5" style={{ borderBottom: i < MEMBERS.length - 1 ? '1px solid var(--border-soft)' : 'none' }}>
+            <span style={{ color: 'var(--text)' }}>{m.name}</span>
+            <span className="text-base font-semibold" style={{ color: 'var(--primary)' }}>৳{(summary.consumedBy[m.id] || 0).toFixed(2)}</span>
           </div>
         ))}
       </motion.div>

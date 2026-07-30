@@ -1,132 +1,200 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-@font-face {
-  font-family: 'Minecraft';
-  src: url('https://fonts.cdnfonts.com/s/37642/MinecraftRegular-Bmg3.otf') format('opentype');
+:root {
+  --primary: #00843D;
+  --primary-dark: #005A2B;
+  --primary-light: #E6F4EC;
+  --success: #16A34A;
+  --danger: #DC2626;
+  --warning: #F97316;
+  --bg: #F6F8F7;
+  --card: #FFFFFF;
+  --text: #1F2933;
+  --text-secondary: #52616B;
+  --text-muted: #7B8794;
+  --border: #D9E2EC;
+  --border-soft: #E6EEF5;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-:root,
 [data-theme="dark"] {
-  --mc-grass: #5b8731;
-  --mc-dirt: #8b5e3c;
-  --mc-stone: #7a7a7a;
-  --mc-gold: #ffaa00;
-  --mc-red: #ff5555;
-  --mc-green: #55ff55;
-  --mc-brown: #6b3a1f;
-  --mc-black: #1a1a1a;
-  --mc-white: #f0f0f0;
-  --mc-bg: #1a1a1a;
-  --mc-card: #6b3a1f;
-  --mc-text: #f0f0f0;
-  --mc-text-secondary: #b0b0b0;
-  --mc-input-bg: #2a2a2a;
-  --txn-bg: #2a2a2a;
-}
-
-[data-theme="light"] {
-  --mc-grass: #4a7a28;
-  --mc-dirt: #c4a882;
-  --mc-stone: #b0a8a0;
-  --mc-gold: #c8860a;
-  --mc-red: #c03030;
-  --mc-green: #2d7a2d;
-  --mc-brown: #f0e8e0;
-  --mc-black: #f5f0eb;
-  --mc-white: #1a1a1a;
-  --mc-bg: #f5f0eb;
-  --mc-card: #ffffff;
-  --mc-text: #1a1a1a;
-  --mc-text-secondary: #6b6b6b;
-  --mc-input-bg: #ffffff;
-  --txn-bg: #ffffff;
+  --bg: #111827;
+  --card: #1F2937;
+  --text: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --border: #374151;
+  --border-soft: #2D3748;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --primary-light: #064E3B;
 }
 
 * {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: 'Minecraft', monospace;
-  background-color: var(--mc-bg);
-  color: var(--mc-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
   margin: 0;
   padding: 0;
   touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .pb-safe {
   padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
 }
 
-.pixel-border {
-  border: 4px solid var(--mc-stone);
-  box-shadow:
-    inset -4px -4px 0 0 #4a4a4a,
-    inset 4px 4px 0 0 #9a9a9a;
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.pixel-border-sm {
-  border: 2px solid var(--mc-stone);
-  box-shadow:
-    inset -2px -2px 0 0 #4a4a4a,
-    inset 2px 2px 0 0 #9a9a9a;
-}
-
-.pixel-btn {
-  border: 4px solid var(--mc-stone);
-  box-shadow:
-    inset -4px -4px 0 0 #4a4a4a,
-    inset 4px 4px 0 0 #9a9a9a;
-  transition: all 0.05s step-end;
+.btn-primary {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s;
+  min-height: 48px;
 }
 
-.pixel-btn:active {
-  box-shadow:
-    inset 4px 4px 0 0 #4a4a4a,
-    inset -4px -4px 0 0 #9a9a9a;
-  transform: translateY(2px);
+.btn-primary:active {
+  background: var(--primary-dark);
 }
 
-.pixel-input {
-  border: 3px solid var(--mc-stone);
-  background: var(--mc-input-bg);
-  color: var(--mc-text);
-  box-shadow: inset 2px 2px 0 0 #4a4a4a;
+.btn-primary:disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 14px 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-height: 48px;
+}
+
+.btn-secondary:active {
+  background: var(--bg);
+  border-color: var(--text-muted);
+}
+
+.btn-danger {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: var(--danger);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 48px;
+}
+
+.btn-danger:active {
+  background: #B91C1C;
+}
+
+.btn-ghost {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-ghost:active {
+  background: var(--bg);
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  background: var(--card);
+  color: var(--text);
   outline: none;
+  transition: border-color 0.15s;
 }
 
-.pixel-input:focus {
-  border-color: var(--mc-gold);
+.input-field:focus {
+  border-color: var(--primary);
+}
+
+select.input-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2352616B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.page-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 80px 16px 100px;
+  min-height: 100vh;
 }
 
 /* Theme toggle switch */
 .theme-switch {
-  width: 52px;
-  height: 28px;
-  border-radius: 14px;
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
   cursor: pointer;
   position: relative;
-  border: 3px solid var(--mc-stone);
-  background: var(--mc-brown);
+  border: none;
+  background: var(--border);
   transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.theme-switch.on {
+  background: var(--primary);
 }
 
 .theme-switch::after {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--mc-gold);
+  background: white;
   transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .theme-switch.on::after {
-  transform: translateX(24px);
+  transform: translateX(22px);
 }

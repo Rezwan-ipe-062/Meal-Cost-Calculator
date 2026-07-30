@@ -16,7 +16,7 @@ export default function LoginPage() {
       setError('')
       setStep('pick-member')
     } else {
-      setError('Wrong password! Try 2468')
+      setError('Wrong password!')
     }
   }
 
@@ -26,60 +26,69 @@ export default function LoginPage() {
 
   if (step === 'password') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: dark ? 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' : 'linear-gradient(180deg, #f5f0eb 0%, #e8e0d8 100%)' }}>
-        <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-6 w-full max-w-sm" style={{ background: dark ? 'var(--mc-dirt)' : 'var(--mc-card)' }}>
-          <div className="flex justify-end mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs" style={{ color: 'var(--mc-text-secondary)' }}>{dark ? '🌙' : '☀️'}</span>
-              <div className={`theme-switch ${!dark ? 'on' : ''}`} onClick={toggle} role="button" aria-label="Toggle theme" />
-            </div>
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #00843D 0%, #005A2B 100%)' }}>
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="w-full max-w-sm">
+          <div className="text-center mb-8">
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: 'spring' }} className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl" style={{ background: 'rgba(255,255,255,0.15)' }}>
+              🍳
+            </motion.div>
+            <h1 className="text-2xl font-bold text-white mb-1">Mess Cost</h1>
+            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>Meal expense tracker</p>
           </div>
-          <h1 className="text-2xl text-center mb-2" style={{ color: 'var(--mc-gold)' }}>Mess Cost</h1>
-          <h1 className="text-2xl text-center mb-6" style={{ color: 'var(--mc-gold)' }}>Calculator</h1>
-          <div className="text-5xl text-center mb-6">🏔️</div>
-          <input
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={e => { setPassword(e.target.value); setError('') }}
-            onKeyDown={e => e.key === 'Enter' && handlePasswordSubmit()}
-            className="pixel-input w-full p-4 mb-3 text-center text-lg"
-            autoFocus
-          />
-          {error && <p className="text-red-400 text-center mb-3">{error}</p>}
-          <button onClick={handlePasswordSubmit} className="pixel-btn w-full py-4 text-lg font-bold" style={{ background: 'var(--mc-grass)', color: 'white' }}>
-            Enter
-          </button>
+          <div className="card" style={{ background: 'white' }}>
+            <div className="flex justify-end mb-2">
+              <div className="flex items-center gap-2">
+                <span style={{ color: '#9CA3AF', fontSize: 14 }}>{dark ? '🌙' : '☀️'}</span>
+                <div className={`theme-switch ${!dark ? 'on' : ''}`} onClick={toggle} role="button" aria-label="Toggle theme" />
+              </div>
+            </div>
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={e => { setPassword(e.target.value); setError('') }}
+              onKeyDown={e => e.key === 'Enter' && handlePasswordSubmit()}
+              className="input-field mb-3 text-center text-lg"
+              autoFocus
+            />
+            {error && <p className="text-sm mb-3 text-center" style={{ color: '#DC2626' }}>{error}</p>}
+            <button onClick={handlePasswordSubmit} className="btn-primary text-base">
+              Enter
+            </button>
+          </div>
         </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: dark ? 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' : 'linear-gradient(180deg, #f5f0eb 0%, #e8e0d8 100%)' }}>
-      <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-6 w-full max-w-sm" style={{ background: dark ? 'var(--mc-dirt)' : 'var(--mc-card)' }}>
-        <div className="flex justify-end mb-2">
-          <div className="flex items-center gap-2">
-            <span className="text-xs" style={{ color: 'var(--mc-text-secondary)' }}>{dark ? '🌙' : '☀️'}</span>
-            <div className={`theme-switch ${!dark ? 'on' : ''}`} onClick={toggle} role="button" aria-label="Toggle theme" />
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #00843D 0%, #005A2B 100%)' }}>
+      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl" style={{ background: 'rgba(255,255,255,0.15)' }}>
+            👤
           </div>
+          <h2 className="text-xl font-bold text-white">Who are you?</h2>
         </div>
-        <h2 className="text-xl text-center mb-6" style={{ color: 'var(--mc-gold)' }}>Who are you?</h2>
-        <div className="flex flex-col gap-3">
-          {MEMBERS.map(m => (
-            <motion.button
-              key={m.id}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => handleSelectMember(m)}
-              className="pixel-btn w-full py-5 text-lg font-bold flex items-center justify-center gap-3"
-              style={{ background: 'var(--mc-stone)', color: 'var(--mc-text)', minHeight: '56px' }}
-            >
-              {m.name}
-            </motion.button>
-          ))}
+        <div className="card" style={{ background: 'white' }}>
+          <div className="flex flex-col gap-3">
+            {MEMBERS.map((m, i) => (
+              <motion.button
+                key={m.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.08 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => handleSelectMember(m)}
+                className="w-full py-4 text-lg font-semibold rounded-xl flex items-center justify-center gap-2"
+                style={{ background: 'var(--bg)', color: 'var(--text)', border: '1px solid var(--border)' }}
+              >
+                {m.name}
+              </motion.button>
+            ))}
+          </div>
+          {error && <p className="text-red-500 text-center mt-4 text-sm">{error}</p>}
         </div>
-        {error && <p className="text-red-400 text-center mt-4">{error}</p>}
       </motion.div>
     </div>
   )
