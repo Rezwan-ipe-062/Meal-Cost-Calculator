@@ -86,7 +86,7 @@ export default function Settings() {
           <div>
             <p className="text-xs font-semibold mb-3" style={{ color: '#DC2626' }}>Type the mess password to confirm</p>
             <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="input-field mb-3 text-center font-bold" style={{ letterSpacing: '4px' }} placeholder="Password" autoFocus />
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-3">
               <button onClick={() => { setShowClear(false); setConfirmPw('') }} className="btn-secondary">Cancel</button>
               <button onClick={handleClearAll} disabled={confirmPw !== SHARED_PASSWORD} className="btn-danger" style={{ opacity: confirmPw !== SHARED_PASSWORD ? 0.4 : 1 }}>Delete All</button>
             </div>

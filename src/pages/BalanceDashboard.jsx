@@ -145,7 +145,7 @@ export default function BalanceDashboard() {
               {MEMBERS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
             <input type="number" inputMode="decimal" value={settleAmount} onChange={e => setSettleAmount(e.target.value)} className="input-field mb-3 text-lg font-bold" placeholder="Amount ৳" />
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-3">
               <button onClick={() => setShowSettle(false)} className="btn-secondary">Cancel</button>
               <button onClick={handleSettlement} className="btn-primary">Confirm</button>
             </div>

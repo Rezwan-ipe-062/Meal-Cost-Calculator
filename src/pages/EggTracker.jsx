@@ -96,7 +96,7 @@ export default function EggTracker() {
       <div className="card mb-4">
         <p className="text-xs font-bold uppercase mb-3" style={{ color: 'var(--text-muted)', letterSpacing: '0.3px' }}>Log eggs eaten</p>
         <div className="flex flex-col gap-2.5 mb-3">
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-3">
             <select value={eatMember} onChange={e => setEatMember(e.target.value)} className="input-field text-sm font-semibold">
               <option value="">Who?</option>
               {MEMBERS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}

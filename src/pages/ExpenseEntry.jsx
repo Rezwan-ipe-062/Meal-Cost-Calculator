@@ -79,7 +79,7 @@ export default function ExpenseEntry() {
 
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card mb-4">
         <label className="block text-xs font-bold mb-3" style={{ color: 'var(--text-muted)', letterSpacing: '0.3px', textTransform: 'uppercase' }}>Paid By</label>
-        <div className="grid grid-cols-3 gap-2.5 mb-5">
+        <div className="grid grid-cols-3 gap-3 mb-5">
           {MEMBERS.map(m => (
             <button key={m.id} onClick={() => setPaidBy(m.id)}
               className="text-sm font-bold rounded-xl min-h-[52px]"
@@ -98,7 +98,7 @@ export default function ExpenseEntry() {
         </div>
 
         <label className="block text-xs font-bold mb-3" style={{ color: 'var(--text-muted)', letterSpacing: '0.3px', textTransform: 'uppercase' }}>Split Between</label>
-        <div className="grid grid-cols-3 gap-2.5 mb-3">
+        <div className="grid grid-cols-3 gap-3 mb-3">
           {MEMBERS.map(m => (
             <button key={m.id} onClick={() => toggleSplit(m.id)}
               className="text-sm font-bold rounded-xl min-h-[52px]"
