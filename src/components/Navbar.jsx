@@ -14,21 +14,21 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 pixel-border z-50" style={{ background: 'var(--mc-dirt)', borderTop: '4px solid var(--mc-stone)' }}>
+    <nav className="fixed bottom-0 left-0 right-0 pixel-border z-50 pb-safe" style={{ background: 'var(--mc-dirt)', borderTop: '4px solid var(--mc-stone)' }}>
       <div className="flex justify-around max-w-lg mx-auto">
         {tabs.map(tab => (
           <motion.button
             key={tab.path}
             whileTap={{ scale: 0.9 }}
             onClick={() => navigate(tab.path)}
-            className="flex flex-col items-center py-2 px-3 text-xs"
+            className="flex flex-col items-center py-3 px-3 text-xs min-w-0 flex-1"
             style={{
               color: location.pathname === tab.path ? 'var(--mc-gold)' : 'var(--mc-white)',
-              background: location.pathname === tab.path ? 'rgba(255,170,0,0.1)' : 'transparent',
+              background: location.pathname === tab.path ? 'rgba(255,170,0,0.15)' : 'transparent',
             }}
           >
-            <span className="text-lg">{tab.icon}</span>
-            <span>{tab.label}</span>
+            <span className="text-xl mb-0.5">{tab.icon}</span>
+            <span className="text-xs">{tab.label}</span>
           </motion.button>
         ))}
       </div>

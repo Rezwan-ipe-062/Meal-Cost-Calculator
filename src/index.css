@@ -29,6 +29,13 @@ body {
   color: var(--mc-white);
   margin: 0;
   padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe area padding for modern phones */
+.pb-safe {
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
 }
 
 .pixel-border {

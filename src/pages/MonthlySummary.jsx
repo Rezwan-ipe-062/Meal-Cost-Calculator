@@ -17,47 +17,50 @@ export default function MonthlySummary() {
   }, [])
 
   const summary = computeMonthlySummary(expenses, splits, month, year)
-  const avgDaily = summary.transactionCount > 0 ? (summary.totalExpense / new Date(year, month + 1, 0).getDate()).toFixed(2) : '0.00'
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const avgDaily = summary.transactionCount > 0 ? (summary.totalExpense / daysInMonth).toFixed(2) : '0.00'
 
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
   return (
-    <div className="p-4 pb-24 min-h-screen" style={{ background: 'var(--mc-black)' }}>
+    <div className="p-4 pb-28 min-h-screen" style={{ background: 'var(--mc-black)' }}>
       <motion.h1 initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-2xl mb-4 text-center" style={{ color: 'var(--mc-gold)' }}>
         Monthly Summary
       </motion.h1>
 
-      <div className="flex justify-center gap-2 mb-6">
-        <button onClick={() => { if (month > 0) setMonth(month - 1); else { setMonth(11); setYear(year - 1) } }} className="pixel-btn px-3 py-2" style={{ background: 'var(--mc-stone)', color: 'white' }}>◀</button>
-        <div className="pixel-border-sm px-4 py-2 text-lg font-bold" style={{ background: 'var(--mc-brown)' }}>
+      <div className="flex justify-center items-center gap-3 mb-6">
+        <button onClick={() => { if (month > 0) setMonth(month - 1); else { setMonth(11); setYear(year - 1) } }} className="pixel-btn px-4 py-3 text-lg" style={{ background: 'var(--mc-stone)', color: 'white', minWidth: '44px', minHeight: '44px' }}>◀</button>
+        <div className="pixel-border-sm px-5 py-3 text-lg font-bold min-w-[120px] text-center" style={{ background: 'var(--mc-brown)' }}>
           {months[month]} {year}
         </div>
-        <button onClick={() => { if (month < 11) setMonth(month + 1); else { setMonth(0); setYear(year + 1) } }} className="pixel-btn px-3 py-2" style={{ background: 'var(--mc-stone)', color: 'white' }}>▶</button>
+        <button onClick={() => { if (month < 11) setMonth(month + 1); else { setMonth(0); setYear(year + 1) } }} className="pixel-btn px-4 py-3 text-lg" style={{ background: 'var(--mc-stone)', color: 'white', minWidth: '44px', minHeight: '44px' }}>▶</button>
       </div>
 
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
         <p className="text-sm">Total Expense</p>
         <p className="text-3xl font-bold" style={{ color: 'var(--mc-gold)' }}>৳{summary.totalExpense.toFixed(2)}</p>
-        <p className="text-sm mt-2">Transactions: {summary.transactionCount}</p>
-        <p className="text-sm">Avg Daily: ৳{avgDaily}</p>
+        <div className="flex gap-4 mt-2 text-sm">
+          <p>Transactions: {summary.transactionCount}</p>
+          <p>Avg Daily: ৳{avgDaily}</p>
+        </div>
       </motion.div>
 
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1 }} className="pixel-border p-4 mb-4" style={{ background: 'var(--mc-brown)' }}>
-        <h3 className="text-sm font-bold mb-2">Amount Paid</h3>
+        <h3 className="text-sm font-bold mb-3">Amount Paid</h3>
         {MEMBERS.map(m => (
-          <div key={m.id} className="flex justify-between py-1">
-            <span>{m.name}</span>
-            <span style={{ color: 'var(--mc-gold)' }}>৳{(summary.paidBy[m.id] || 0).toFixed(2)}</span>
+          <div key={m.id} className="flex justify-between items-center py-2">
+            <span className="text-base">{m.name}</span>
+            <span className="text-base font-bold" style={{ color: 'var(--mc-gold)' }}>৳{(summary.paidBy[m.id] || 0).toFixed(2)}</span>
           </div>
         ))}
       </motion.div>
 
       <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="pixel-border p-4" style={{ background: 'var(--mc-brown)' }}>
-        <h3 className="text-sm font-bold mb-2">Consumption Share</h3>
+        <h3 className="text-sm font-bold mb-3">Consumption Share</h3>
         {MEMBERS.map(m => (
-          <div key={m.id} className="flex justify-between py-1">
-            <span>{m.name}</span>
-            <span style={{ color: 'var(--mc-gold)' }}>৳{(summary.consumedBy[m.id] || 0).toFixed(2)}</span>
+          <div key={m.id} className="flex justify-between items-center py-2">
+            <span className="text-base">{m.name}</span>
+            <span className="text-base font-bold" style={{ color: 'var(--mc-gold)' }}>৳{(summary.consumedBy[m.id] || 0).toFixed(2)}</span>
           </div>
         ))}
       </motion.div>
