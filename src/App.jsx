@@ -19,10 +19,12 @@ function ProtectedRoute({ children }) {
 function AppLayout({ children }) {
   const { dark, toggle } = useTheme()
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: 'var(--bg)' }}>
       <Navbar dark={dark} toggle={toggle} />
-      {children}
-    </>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px', paddingBottom: '100px' }}>
+        {children}
+      </div>
+    </div>
   )
 }
 

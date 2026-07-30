@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   if (step === 'password') {
     return (
-      <div className="min-h-dvh flex flex-col" style={{ background: '#059669' }}>
+      <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', background: '#059669' }}>
         <div className="flex-1 flex flex-col items-center justify-center px-6 pb-12">
           <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 15 }}>
             <div style={{ width: 80, height: 80, borderRadius: 24, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -74,7 +74,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-dvh flex flex-col" style={{ background: '#059669' }}>
+    <div style={{ height: '100dvh', display: 'flex', flexDirection: 'column', background: '#059669' }}>
       <div className="flex-1 flex flex-col items-center justify-center px-6 pb-12">
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 15 }}>
           <div style={{ width: 80, height: 80, borderRadius: 24, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

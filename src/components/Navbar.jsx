@@ -29,7 +29,7 @@ export default function Navbar({ dark, toggle }) {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50" style={{ background: 'var(--card)', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ background: 'var(--card)', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
         <div className="flex items-center justify-between px-5 py-3" style={{ maxWidth: 480, margin: '0 auto' }}>
           <div className="flex items-center gap-2.5">
             <div style={{ width: 10, height: 10, borderRadius: 3, background: 'var(--primary)' }} />
@@ -41,7 +41,7 @@ export default function Navbar({ dark, toggle }) {
         </div>
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50" style={{ background: 'var(--card)', borderTop: '1px solid var(--border)' }}>
+      <nav style={{ background: 'var(--card)', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
         <div className="flex justify-around pb-safe" style={{ maxWidth: 480, margin: '0 auto', paddingTop: 6 }}>
           {tabs.map(tab => {
             const active = location.pathname === tab.path

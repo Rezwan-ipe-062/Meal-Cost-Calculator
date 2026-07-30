@@ -64,8 +64,6 @@ body {
 .page-container {
   max-width: 480px;
   margin: 0 auto;
-  padding: 72px 20px 100px;
-  min-height: 100dvh;
 }
 
 .section-title {
