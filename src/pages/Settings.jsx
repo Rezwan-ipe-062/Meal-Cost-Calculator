@@ -17,19 +17,22 @@ export default function Settings() {
   const [confirmPw, setConfirmPw] = useState('')
   const [showClear, setShowClear] = useState(false)
   const [cleared, setCleared] = useState(false)
+  const [clearError, setClearError] = useState('')
 
   const handleClearAll = async () => {
-    if (confirmPw !== SHARED_PASSWORD) return
-    await Promise.all([
+    if (confirmPw !== SHARED_PASSWORD) { setClearError('Wrong password'); return }
+    const results = await Promise.allSettled([
       supabase.from('expense_splits').delete().neq('id', 0),
       supabase.from('expenses').delete().neq('id', 0),
       supabase.from('settlements').delete().neq('id', 0),
       supabase.from('egg_consumption').delete().neq('id', 0),
       supabase.from('egg_stock').delete().neq('id', 0),
     ])
+    if (results.some(r => r.status === 'rejected')) return
     setCleared(true)
     setShowClear(false)
     setConfirmPw('')
+    setClearError('')
     setTimeout(() => setCleared(false), 3000)
   }
 
@@ -85,9 +88,10 @@ export default function Settings() {
         ) : (
           <div>
             <p className="text-xs font-semibold mb-3" style={{ color: '#DC2626' }}>Type the mess password to confirm</p>
-            <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="input-field mb-3 text-center font-bold" style={{ letterSpacing: '4px' }} placeholder="Password" autoFocus />
+            <input type="password" value={confirmPw} onChange={e => { setConfirmPw(e.target.value); setClearError('') }} className="input-field mb-3 text-center font-bold" style={{ letterSpacing: '4px' }} placeholder="Password" autoFocus />
+            {clearError && <p className="text-xs font-semibold mb-3 text-center" style={{ color: '#DC2626' }}>{clearError}</p>}
             <div className="grid grid-cols-2 gap-3">
-              <button onClick={() => { setShowClear(false); setConfirmPw('') }} className="btn-secondary">Cancel</button>
+              <button onClick={() => { setShowClear(false); setConfirmPw(''); setClearError('') }} className="btn-secondary">Cancel</button>
               <button onClick={handleClearAll} disabled={confirmPw !== SHARED_PASSWORD} className="btn-danger" style={{ opacity: confirmPw !== SHARED_PASSWORD ? 0.4 : 1 }}>Delete All</button>
             </div>
           </div>

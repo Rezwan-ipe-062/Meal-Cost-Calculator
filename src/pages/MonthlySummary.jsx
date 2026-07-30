@@ -16,11 +16,12 @@ export default function MonthlySummary() {
   const [splits, setSplits] = useState([])
 
   useEffect(() => {
-    supabase.from('expenses').select('*').then(r => { if (r.data) setExpenses(r.data) })
-    supabase.from('expense_splits').select('*').then(r => { if (r.data) setSplits(r.data) })
+    supabase.from('expenses').select('*').then(r => { if (!r.error && r.data) setExpenses(r.data) })
+    supabase.from('expense_splits').select('*').then(r => { if (!r.error && r.data) setSplits(r.data) })
   }, [])
 
-  const summary = computeMonthlySummary(expenses, splits, month, year)
+  const validExpenses = expenses.filter(e => e.date && !isNaN(new Date(e.date).getTime()))
+  const summary = computeMonthlySummary(validExpenses, splits, month, year)
   const daysInMonth = new Date(year, month + 1, 0).getDate()
   const avgDaily = summary.transactionCount > 0 ? (summary.totalExpense / daysInMonth).toFixed(2) : '0.00'
 

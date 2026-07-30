@@ -39,18 +39,21 @@ export default function EggTracker() {
 
   const handleAddStock = async () => {
     if (!addQty) return
-    await supabase.from('egg_stock').insert({ quantity: Number(addQty) })
+    const { error } = await supabase.from('egg_stock').insert({ quantity: Number(addQty) })
+    if (error) return
     setAddQty('')
     loadEggs()
   }
 
   const handleEat = async () => {
-    if (!eatMember || !eatQty) return
-    await supabase.from('egg_consumption').insert({
+    if (!eatMember || !eatQty || Number(eatQty) > remaining) return
+    const { error } = await supabase.from('egg_consumption').insert({
       member_id: Number(eatMember),
       quantity: Number(eatQty),
       meal_type: eatMeal,
     })
+    if (error) return
+    setEatQty('1')
     loadEggs()
   }
 

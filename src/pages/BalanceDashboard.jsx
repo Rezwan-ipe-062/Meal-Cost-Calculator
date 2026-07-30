@@ -51,12 +51,13 @@ export default function BalanceDashboard() {
   const net = computeNetBalances(expenses, splits, settlements)
 
   const handleSettlement = async () => {
-    if (!settleFrom || !settleTo || !settleAmount) return
-    await supabase.from('settlements').insert({
+    if (!settleFrom || !settleTo || !settleAmount || Number(settleAmount) <= 0 || settleFrom === settleTo) return
+    const { error } = await supabase.from('settlements').insert({
       from_member: Number(settleFrom),
       to_member: Number(settleTo),
       amount: Number(settleAmount),
     })
+    if (error) return
     setShowSettle(false)
     setSettleFrom('')
     setSettleTo('')
